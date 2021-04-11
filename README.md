@@ -6,3 +6,6 @@
 
 output: results id with sum Lition tokens
 
+needs .env file with
+INFURA_KEY = ...     #for connectin to testnet
+MAINNET_KEY = ...    #for connetion to mainnet
