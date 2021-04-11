@@ -2,10 +2,11 @@ const result = require('dotenv').config()
 const Web3 = require('web3');
 
 if (result.error) {
+  console.error('provide .env with INFURA_KEY and MAINNET_KEY');
   throw result.error
 }
 
-const kovan = new Web3(`wss://kovan.infura.io/ws/v3/${process.env.INFURA}`);
+const kovan = new Web3(`wss://kovan.infura.io/ws/v3/${process.env.INFURA_KEY}`);
 const mainnet = new Web3(`wss://eth.getblock.io/?api_key=${process.env.MAINNET_KEY}`);
 
 // the balance on specific Block
@@ -42,6 +43,11 @@ const token = new mainnet.eth.Contract(tokenAbi, '0x763Fa6806e1acf68130D2D0f0df7
             results[t.choice] += mainnet.utils.toBN(balance).div(mainnet.utils.toBN('1000000000000000000')).toNumber();
         });
     }));
-    console.log(results);
+    console.log('=== RESULTS === ');
+    for (let key in results){
+      if (key != 0){
+        console.log(`proposal id = ${key} result : ${results[key]} `)
+      }
+    }
     process.exit(0);
 })();
